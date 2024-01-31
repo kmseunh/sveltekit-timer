@@ -28,8 +28,9 @@
             </div>
         </div>
         <div class="absolute bottom-[85px] left-0 right-0 flex justify-center">
-            <button class="svg-button" aria-label="Button 1"
-                ><svg
+            <button class="svg-button" aria-label="Button 1"></button>
+            <button class="svg-button" aria-label="Start Timer">
+                <svg
                     class="mr-[34px]"
                     width="96"
                     height="96"
@@ -37,25 +38,20 @@
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                 >
-                    <circle cx="48" cy="48" r="47.5" stroke="white" />
-                    <rect
-                        x="31"
-                        y="29"
-                        width="13"
-                        height="38"
-                        rx="5"
+                    <circle
+                        cx="48"
+                        cy="48"
+                        r="47.5"
+                        fill="white"
+                        fill-opacity="0.4"
+                        stroke="white"
+                    />
+                    <path
+                        d="M67.838 45.4437C69.7445 46.6147 69.7445 49.3853 67.838 50.5563L41.3201 66.8437C39.3212 68.0714 36.75 66.6332 36.75 64.2873L36.75 31.7127C36.75 29.3668 39.3212 27.9286 41.3201 29.1563L67.838 45.4437Z"
                         fill="white"
                     />
-                    <rect
-                        x="52"
-                        y="29"
-                        width="13"
-                        height="38"
-                        rx="5"
-                        fill="white"
-                    />
-                </svg></button
-            >
+                </svg>
+            </button>
             <button class="svg-button" aria-label="Button 1">
                 <svg
                     width="96"
