@@ -5,6 +5,7 @@
     let timer;
     let isRunning = false;
     let isStopped = false;
+    let laps = [];
 
     const startWatch = () => {
         timer = setInterval(() => {
@@ -30,10 +31,21 @@
 
     const resetWatch = () => {
         clearInterval(timer);
+        laps = [];
         milliseconds = 0;
         seconds = 0;
         minutes = 0;
         isStopped = false;
+    };
+
+    const labWatch = () => {
+        laps = [
+            ...laps,
+            {
+                lapNumber: laps.length + 1,
+                time: `${minutes}:${seconds}.${milliseconds}`,
+            },
+        ];
     };
 </script>
 
@@ -64,7 +76,11 @@
                       ? '0' + milliseconds
                       : milliseconds}
             </p>
-            <button id="lap" class="absolute left-[5.5rem] top-[25.5625rem]">
+            <button
+                id="lap"
+                on:click={labWatch}
+                class="absolute left-[5.5rem] top-[25.5625rem]"
+            >
                 <svg
                     width="96"
                     height="96"
@@ -163,10 +179,14 @@
                 </svg>
             </div>
             <div
-                class="absolute left-[3.6875rem] top-[36.875rem] w-[29.625rem] flex justify-between"
+                class="absolute left-[3.6875rem] top-[36.875rem] w-[29.625rem] flex flex-col-reverse"
             >
-                <span id="lab1">랩1</span>
-                <span id="lab1-time">00:00.00</span>
+                {#each laps.slice().reverse() as lap}
+                    <div class="flex text-[1.75rem] justify-between">
+                        <span>랩{lap.lapNumber}</span>
+                        <span>{lap.time}</span>
+                    </div>
+                {/each}
             </div>
         </div>
     </div>
