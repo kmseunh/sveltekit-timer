@@ -27,6 +27,14 @@
         isRunning = false;
         isStopped = true;
     };
+
+    const resetWatch = () => {
+        clearInterval(timer);
+        milliseconds = 0;
+        seconds = 0;
+        minutes = 0;
+        isStopped = false;
+    };
 </script>
 
 <div class="flex items-center justify-center h-screen">
@@ -98,7 +106,9 @@
                     </svg>
                 </button>
             {:else if isStopped}
-                <button class="absolute left-[25.5rem] top-[25.5625rem]"
+                <button
+                    on:click={resetWatch}
+                    class="absolute left-[25.5rem] top-[25.5625rem]"
                     ><svg
                         width="96"
                         height="96"
