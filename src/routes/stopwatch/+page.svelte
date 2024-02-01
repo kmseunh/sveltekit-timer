@@ -1,3 +1,24 @@
+<script>
+    let milliseconds = 0;
+    let seconds = 0;
+    let minutes = 0;
+
+    const startWatch = () => {
+        const timer = setInterval(() => {
+            milliseconds++;
+            if (milliseconds === 1000) {
+                milliseconds = 0;
+                seconds++;
+            }
+            if (seconds === 60) {
+                seconds = 0;
+                minutes++;
+            }
+        }, 1);
+        return timer;
+    };
+</script>
+
 <div class="flex items-center justify-center h-screen">
     <div class="bg-rec w-[38rem] h-[54.5rem] rounded-[1.875rem] relative">
         <div
@@ -12,14 +33,20 @@
         </div>
         <div class="w-[30.1875rem] h-[7.3125rem]">
             <div
-                class="w-[483px] h-[117px] absolute left-[55px] top-[238px] rounded-[15px] border-[0.5px] border-[#ff8a00]"
+                class="w-[483px] h-[7.3125rem] absolute left-[3.4375rem] top-[14.875rem] rounded-[15px] border-[.0313rem] border-btn"
             ></div>
             <p
-                class="absolute left-[91px] top-[225px] text-[95px] font-semibold text-left uppercase text-white"
+                class="absolute left-[3.9375rem] top-[14.0625rem] text-[5.9375rem] font-semibold uppercase"
             >
-                00:00.00
+                {minutes < 10 ? '0' + minutes : minutes}:{seconds < 10
+                    ? '0' + seconds
+                    : seconds}.{milliseconds < 10
+                    ? '00' + milliseconds
+                    : milliseconds < 100
+                      ? '0' + milliseconds
+                      : milliseconds}
             </p>
-            <button class="absolute left-[88px] top-[409px]">
+            <button id="lap" class="absolute left-[5.5rem] top-[25.5625rem]">
                 <svg
                     width="96"
                     height="96"
@@ -41,7 +68,10 @@
                     />
                 </svg></button
             >
-            <button class="absolute left-[408px] top-[409px]"
+            <button
+                id="start"
+                on:click={startWatch}
+                class="absolute left-[25.5rem] top-[25.5625rem]"
                 ><svg
                     width="96"
                     height="96"
@@ -56,7 +86,7 @@
                     />
                 </svg>
             </button>
-            <div id="line" class="absolute left-[59px] top-[573px]">
+            <div id="line" class="absolute left-[3.6875rem] top-[35.8125rem]">
                 <svg
                     width="474"
                     height="1"
@@ -68,10 +98,10 @@
                 </svg>
             </div>
             <div
-                class="absolute left-[59px] top-[590px] w-[474px] flex justify-between text-white"
+                class="absolute left-[3.6875rem] top-[36.875rem] w-[29.625rem] flex justify-between"
             >
-                <span>랩1</span>
-                <span>00:00.00</span>
+                <span id="lab1">랩1</span>
+                <span id="lab1-time">00:00.00</span>
             </div>
         </div>
     </div>
