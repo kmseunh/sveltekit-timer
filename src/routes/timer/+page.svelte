@@ -27,6 +27,21 @@
         isRunning = false;
     };
 
+    const stopTimer = () => {
+        clearInterval(timer);
+        isRunning = false;
+        seconds = 0;
+        minutes = 0;
+    };
+
+    onMount(() => {
+        startTimer();
+    });
+
+    onDestroy(() => {
+        clearInterval(timer);
+    });
+
     $: formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     $: formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
@@ -143,7 +158,11 @@
                     </svg>
                 </button>
             {/if}
-            <button class="svg-button" aria-label="Stop Timer">
+            <button
+                class="svg-button"
+                on:click={stopTimer}
+                aria-label="Stop Timer"
+            >
                 <svg
                     width="96"
                     height="96"
