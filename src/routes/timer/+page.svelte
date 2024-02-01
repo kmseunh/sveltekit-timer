@@ -1,3 +1,11 @@
+<script>
+    let minute = 0;
+    let second = 0;
+
+    $: formattedMinutes = minute < 10 ? `0${minute}` : minute;
+    $: formattedSeconds = second < 10 ? `0${second}` : second;
+</script>
+
 <div class="flex items-center justify-center h-screen">
     <div class="bg-rec w-[38rem] h-[54.5rem] rounded-[1.875rem] relative">
         <div
@@ -20,9 +28,8 @@
                     <div
                         id="timer"
                         class="text-[5.9375rem] mt-[6.5625rem] font-semibold uppercase relative flex items-center justify-center"
-                        contenteditable="true"
                     >
-                        00<span contenteditable="false">:</span>00
+                        {formattedMinutes}:{formattedSeconds}
                     </div>
                 </div>
             </div>
