@@ -97,11 +97,74 @@
                     <line y1="0.5" x2="474" y2="0.5" stroke="black" />
                 </svg>
             </div>
-            <div>
+            <div
+                class="absolute left-[3.6875rem] top-[25rem] w-[29.625rem] flex flex-col-reverse"
+            >
                 {#each alarms as alarm}
-                    {alarm.time}
+                    <div
+                        class="flex text-[4.25rem] justify-between"
+                        style="opacity: {alarm.status ? 1 : 0.8};"
+                    >
+                        <span>{alarm.time}</span>
+                        <label class="toggle-switch mt-[35px]">
+                            <input
+                                type="checkbox"
+                                checked={alarm.status}
+                                on:change={() => handleToggle(alarm.id)}
+                            />
+                            <span class="slider"></span>
+                        </label>
+                    </div>
                 {/each}
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #000000;
+        transition: 0.4s;
+        border-radius: 34px;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: '';
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: #212121;
+        transition: 0.4s;
+        border-radius: 50%;
+    }
+
+    input:checked + .slider {
+        background-color: #ff8a00;
+    }
+
+    input:checked + .slider:before {
+        background-color: white;
+        transform: translateX(26px);
+    }
+</style>
