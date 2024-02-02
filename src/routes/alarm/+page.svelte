@@ -1,3 +1,49 @@
+<script>
+    let alarmHours = '00';
+    let alarmMinutes = '00';
+    let alarms = [];
+
+    const promptForHour = () => {
+        const hoursInput = prompt('시간을 입력해주세요. (0-23):');
+        const hours = parseInt(hoursInput, 10);
+
+        if (!isNaN(hours) && hours >= 0 && hours <= 23) {
+            alarmHours = hours.toString().padStart(2, '0');
+        } else {
+            alert('정확한 시간을 입력해주세요. (0-23)');
+        }
+    };
+
+    const promptForMinute = () => {
+        const minutesInput = prompt('분을 입력해주세요. (0-59):');
+
+        const minutes = parseInt(minutesInput, 10);
+
+        if (!isNaN(minutes) && minutes >= 0 && minutes <= 59) {
+            alarmMinutes = minutes.toString().padStart(2, '0');
+        } else {
+            alert('정확한 분을 입력해주세요.  (0-59).');
+        }
+    };
+
+    const insertAlarm = () => {
+        alarmHours =
+            alarmHours === 0 ? '00' : alarmHours.toString().padStart(2, '0');
+
+        alarmMinutes =
+            alarmMinutes === 0
+                ? '00'
+                : alarmMinutes.toString().padStart(2, '0');
+
+        alarms = [
+            ...alarms,
+            {
+                time: `${alarmHours}:${alarmMinutes}`,
+            },
+        ];
+    };
+</script>
+
 <div class="flex items-center justify-center h-screen">
     <div class="bg-rec w-[38rem] h-[54.5rem] rounded-[1.875rem] relative">
         <div
@@ -14,9 +60,18 @@
             <div
                 class="absolute mt-[.75rem] ml-[6.125rem] text-[5.9375rem] flex"
             >
-                00:00
+                <div on:click={promptForHour} class="mr-2 cursor-pointer">
+                    {alarmHours}
+                </div>
+                <span>:</span>
+                <div on:click={promptForMinute} class="ml-2 cursor-pointer">
+                    {alarmMinutes}
+                </div>
             </div>
-            <button class="ml-[25.9375rem] mt-[2.3125rem]">
+            <button
+                on:click={insertAlarm}
+                class="ml-[25.9375rem] mt-[2.3125rem]"
+            >
                 <svg
                     width="96"
                     height="96"
@@ -41,6 +96,11 @@
                 >
                     <line y1="0.5" x2="474" y2="0.5" stroke="black" />
                 </svg>
+            </div>
+            <div>
+                {#each alarms as alarm}
+                    {alarm.time}
+                {/each}
             </div>
         </div>
     </div>
