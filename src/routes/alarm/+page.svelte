@@ -1,28 +1,31 @@
 <script>
+    import { onDestroy, onMount } from 'svelte';
+
     let alarmHours = '00';
     let alarmMinutes = '00';
     let alarms = [];
+    let nextAlarmId = 1;
 
     const promptForHour = () => {
-        const hoursInput = prompt('시간을 입력해주세요. (0-23):');
+        const hoursInput = prompt('Enter the hours (0-23):');
         const hours = parseInt(hoursInput, 10);
 
         if (!isNaN(hours) && hours >= 0 && hours <= 23) {
             alarmHours = hours.toString().padStart(2, '0');
         } else {
-            alert('정확한 시간을 입력해주세요. (0-23)');
+            alert('Invalid input. Please enter valid hours (0-23).');
         }
     };
 
     const promptForMinute = () => {
-        const minutesInput = prompt('분을 입력해주세요. (0-59):');
+        const minutesInput = prompt('Enter the minutes (0-59):');
 
         const minutes = parseInt(minutesInput, 10);
 
         if (!isNaN(minutes) && minutes >= 0 && minutes <= 59) {
             alarmMinutes = minutes.toString().padStart(2, '0');
         } else {
-            alert('정확한 분을 입력해주세요.  (0-59).');
+            alert('Invalid input. Please enter valid minutes (0-59).');
         }
     };
 
@@ -38,10 +41,47 @@
         alarms = [
             ...alarms,
             {
+                id: nextAlarmId,
                 time: `${alarmHours}:${alarmMinutes}`,
+                status: false,
             },
         ];
+        nextAlarmId++;
     };
+
+    const handleToggle = (id) => {
+        const index = alarms.findIndex((alarm) => alarm.id === id);
+        if (index !== -1) {
+            alarms[index].status = !alarms[index].status;
+            alarms = [...alarms];
+        }
+    };
+
+    const checkAlarms = () => {
+        setInterval(() => {
+            const now = new Date();
+            const currentHours = now.getHours().toString().padStart(2, '0');
+            const currentMinutes = now.getMinutes().toString().padStart(2, '0');
+
+            alarms.forEach((alarm) => {
+                if (
+                    alarm.status &&
+                    alarm.time === `${currentHours}:${currentMinutes}`
+                ) {
+                    alert('알람!!');
+                    alarm.status = false;
+                }
+            });
+        });
+    };
+
+    onMount(() => {
+        checkAlarms();
+    });
+
+    onDestroy(() => {
+        checkAlarms();
+    });
 </script>
 
 <div class="flex items-center justify-center h-screen">
