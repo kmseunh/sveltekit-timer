@@ -36,9 +36,9 @@
 
 | 메인 페이지 | 타이머 페이지 |
 |:-----------:|:-------------:|
-| ![image](https://github.com/kmseunh/react-memo/assets/105186724/3beb2967-b684-4499-9db1-347d1eb8ff5f){width=300px} | ![image](https://github.com/kmseunh/react-memo/assets/105186724/6c3d1afe-d6b3-4009-80fb-f21ef17240d6){width=300px} |
+| ![image](https://github.com/kmseunh/react-memo/assets/105186724/3beb2967-b684-4499-9db1-347d1eb8ff5f)| ![image](https://github.com/kmseunh/react-memo/assets/105186724/6c3d1afe-d6b3-4009-80fb-f21ef17240d6)|
 | **스톱워치 페이지** | **알람 페이지** |
-| ![image](https://github.com/kmseunh/react-memo/assets/105186724/7b872fc6-555a-4381-8a00-c0defd925f6e){width=300px} | ![image](https://github.com/kmseunh/react-memo/assets/105186724/7296192c-4231-4c27-8803-e6d13a745f43){width=300px} |
+| ![image](https://github.com/kmseunh/react-memo/assets/105186724/7b872fc6-555a-4381-8a00-c0defd925f6e)| ![image](https://github.com/kmseunh/react-memo/assets/105186724/7296192c-4231-4c27-8803-e6d13a745f43)|
 
 &nbsp;
 
