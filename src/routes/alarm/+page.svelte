@@ -25,6 +25,23 @@
             alert('정확한 분을 입력해주세요.  (0-59).');
         }
     };
+
+    const insertAlarm = () => {
+        alarmHours =
+            alarmHours === 0 ? '00' : alarmHours.toString().padStart(2, '0');
+
+        alarmMinutes =
+            alarmMinutes === 0
+                ? '00'
+                : alarmMinutes.toString().padStart(2, '0');
+
+        alarms = [
+            ...alarms,
+            {
+                time: `${alarmHours}:${alarmMinutes}`,
+            },
+        ];
+    };
 </script>
 
 <div class="flex items-center justify-center h-screen">
@@ -51,7 +68,10 @@
                     {alarmMinutes}
                 </div>
             </div>
-            <button class="ml-[25.9375rem] mt-[2.3125rem]">
+            <button
+                on:click={insertAlarm}
+                class="ml-[25.9375rem] mt-[2.3125rem]"
+            >
                 <svg
                     width="96"
                     height="96"
@@ -76,6 +96,11 @@
                 >
                     <line y1="0.5" x2="474" y2="0.5" stroke="black" />
                 </svg>
+            </div>
+            <div>
+                {#each alarms as alarm}
+                    {alarm.time}
+                {/each}
             </div>
         </div>
     </div>
