@@ -1,28 +1,31 @@
 <script>
+    import { onDestroy, onMount } from 'svelte';
+
     let alarmHours = '00';
     let alarmMinutes = '00';
     let alarms = [];
+    let nextAlarmId = 1;
 
     const promptForHour = () => {
-        const hoursInput = prompt('시간을 입력해주세요. (0-23):');
+        const hoursInput = prompt('Enter the hours (0-23):');
         const hours = parseInt(hoursInput, 10);
 
         if (!isNaN(hours) && hours >= 0 && hours <= 23) {
             alarmHours = hours.toString().padStart(2, '0');
         } else {
-            alert('정확한 시간을 입력해주세요. (0-23)');
+            alert('Invalid input. Please enter valid hours (0-23).');
         }
     };
 
     const promptForMinute = () => {
-        const minutesInput = prompt('분을 입력해주세요. (0-59):');
+        const minutesInput = prompt('Enter the minutes (0-59):');
 
         const minutes = parseInt(minutesInput, 10);
 
         if (!isNaN(minutes) && minutes >= 0 && minutes <= 59) {
             alarmMinutes = minutes.toString().padStart(2, '0');
         } else {
-            alert('정확한 분을 입력해주세요.  (0-59).');
+            alert('Invalid input. Please enter valid minutes (0-59).');
         }
     };
 
@@ -38,10 +41,47 @@
         alarms = [
             ...alarms,
             {
+                id: nextAlarmId,
                 time: `${alarmHours}:${alarmMinutes}`,
+                status: false,
             },
         ];
+        nextAlarmId++;
     };
+
+    const handleToggle = (id) => {
+        const index = alarms.findIndex((alarm) => alarm.id === id);
+        if (index !== -1) {
+            alarms[index].status = !alarms[index].status;
+            alarms = [...alarms];
+        }
+    };
+
+    const checkAlarms = () => {
+        setInterval(() => {
+            const now = new Date();
+            const currentHours = now.getHours().toString().padStart(2, '0');
+            const currentMinutes = now.getMinutes().toString().padStart(2, '0');
+
+            alarms.forEach((alarm) => {
+                if (
+                    alarm.status &&
+                    alarm.time === `${currentHours}:${currentMinutes}`
+                ) {
+                    alert('알람!!');
+                    alarm.status = false;
+                }
+            });
+        });
+    };
+
+    onMount(() => {
+        checkAlarms();
+    });
+
+    onDestroy(() => {
+        checkAlarms();
+    });
 </script>
 
 <div class="flex items-center justify-center h-screen">
@@ -97,11 +137,74 @@
                     <line y1="0.5" x2="474" y2="0.5" stroke="black" />
                 </svg>
             </div>
-            <div>
+            <div
+                class="absolute left-[3.6875rem] top-[25rem] w-[29.625rem] flex flex-col-reverse"
+            >
                 {#each alarms as alarm}
-                    {alarm.time}
+                    <div
+                        class="flex text-[4.25rem] justify-between"
+                        style="opacity: {alarm.status ? 1 : 0.8};"
+                    >
+                        <span>{alarm.time}</span>
+                        <label class="toggle-switch mt-[35px]">
+                            <input
+                                type="checkbox"
+                                checked={alarm.status}
+                                on:change={() => handleToggle(alarm.id)}
+                            />
+                            <span class="slider"></span>
+                        </label>
+                    </div>
                 {/each}
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #000000;
+        transition: 0.4s;
+        border-radius: 34px;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: '';
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: #212121;
+        transition: 0.4s;
+        border-radius: 50%;
+    }
+
+    input:checked + .slider {
+        background-color: #ff8a00;
+    }
+
+    input:checked + .slider:before {
+        background-color: white;
+        transform: translateX(26px);
+    }
+</style>
